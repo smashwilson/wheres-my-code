@@ -1,0 +1,36 @@
+{
+  "name": "@smashwilson/wheres-my-code",
+  "version": "1.0.0",
+  "description": "Find bundled module versions in Atom releases",
+  "main": "build/index.js",
+  "scripts": {
+    "build": "tsc",
+    "lint": "tslint --config tslint.json --project tsconfig.json",
+    "prepare": "npm run build",
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smashwilson/wheres-my-code.git"
+  },
+  "keywords": [
+    "atom",
+    "github"
+  ],
+  "author": "Ash Wilson <smashwilson@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/smashwilson/wheres-my-code/issues"
+  },
+  "homepage": "https://github.com/smashwilson/wheres-my-code#readme",
+  "devDependencies": {
+    "tslint": "^5.9.1",
+    "typescript": "^2.7.2"
+  },
+  "dependencies": {
+    "@types/request": "^2.47.0",
+    "@types/request-promise-native": "^1.0.14",
+    "request": "^2.85.0",
+    "request-promise-native": "^1.0.5"
+  }
+}
