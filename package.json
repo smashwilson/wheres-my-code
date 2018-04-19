@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Find bundled module versions in Atom releases",
   "main": "build/index.js",
+  "bin": "build/index.js",
   "scripts": {
     "build": "tsc",
     "lint": "tslint --config tslint.json --project tsconfig.json",
@@ -28,8 +29,11 @@
     "typescript": "^2.7.2"
   },
   "dependencies": {
+    "@types/cli": "^0.11.19",
     "@types/request": "^2.47.0",
     "@types/request-promise-native": "^1.0.14",
+    "chalk": "^2.3.2",
+    "cli": "^1.0.1",
     "request": "^2.85.0",
     "request-promise-native": "^1.0.5"
   }
