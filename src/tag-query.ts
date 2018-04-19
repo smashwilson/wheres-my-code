@@ -25,10 +25,10 @@ export default class TagQuery extends Query {
       masterVersion, stableVersion, stableHotfixVersion, betaVersion, betaHotfixVersion
     ] = await Promise.all([
       atom.getPackageVersion(this.repo, 'master'),
-      atom.getPackageVersion(this.repo, 'v1.25.0'),
-      atom.getPackageVersion(this.repo, '1.25-releases'),
-      atom.getPackageVersion(this.repo, 'v1.26.0-beta0'),
+      atom.getPackageVersion(this.repo, 'v1.26.0'),
       atom.getPackageVersion(this.repo, '1.26-releases'),
+      atom.getPackageVersion(this.repo, 'v1.27.0-beta0'),
+      atom.getPackageVersion(this.repo, '1.27-releases'),
     ])
 
     console.log({masterVersion, betaVersion, betaHotfixVersion, stableVersion, stableHotfixVersion})
