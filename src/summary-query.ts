@@ -25,6 +25,6 @@ export default class SummaryQuery extends Query {
       return
     }
 
-    console.log(`on ${chalk.green(deployment.description)} ${chalk.gray('(' + deployment.atomRef + ')')}: ${deployment.packageVersion}`)
+    console.log(`.. on ${chalk.green(deployment.description)} ${chalk.gray('(' + deployment.atomRef + ')')}: ${deployment.packageVersion}`)
   }
 }
