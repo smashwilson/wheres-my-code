@@ -1,7 +1,9 @@
 import cli from 'cli';
 
+import Query from './query'
 import PullRequestQuery from './pull-request-query'
 import TagQuery from './tag-query'
+import SummaryQuery from './summary-query'
 
 export interface Opts {
   repo: string,
@@ -10,10 +12,8 @@ export interface Opts {
 };
 
 export default async function (options: Opts) {
-  const [owner, repo] = normalizeRepo(options.repo);
-  const query = options.pr ?
-    new PullRequestQuery(owner, repo, options.pr) :
-    new TagQuery(owner, repo, options.tag || null);
+  const [owner, repo] = normalizeRepo(options.repo)
+  const query = createQuery(owner, repo, options)
 
   cli.info(`Querying ${query.describe()}.`);
 
@@ -26,4 +26,16 @@ function normalizeRepo (repo: string): [string, string] {
   } else {
     return ['atom', repo];
   }
+}
+
+function createQuery (owner: string, repo: string, options: Opts): Query {
+  if (options.pr) {
+    return new PullRequestQuery(owner, repo, options.pr)
+  }
+
+  if (options.tag) {
+    return new TagQuery(owner, repo, options.tag || null)
+  }
+
+  return new SummaryQuery(owner, repo)
 }
