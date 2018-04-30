@@ -21,16 +21,36 @@ export default class TagQuery extends Query {
   }
 
   async report() {
-    const [
-      masterVersion, stableVersion, stableHotfixVersion, betaVersion, betaHotfixVersion
-    ] = await Promise.all([
-      atom.getPackageVersion(this.repo, 'master'),
-      atom.getPackageVersion(this.repo, 'v1.26.0'),
-      atom.getPackageVersion(this.repo, '1.26-releases'),
-      atom.getPackageVersion(this.repo, 'v1.27.0-beta0'),
-      atom.getPackageVersion(this.repo, '1.27-releases'),
-    ])
+    const {latestStable, latestBeta} = await atom.getLatestVersions();
 
-    console.log({masterVersion, betaVersion, betaHotfixVersion, stableVersion, stableHotfixVersion})
+    const branchNameFrom = (version: string) => {
+      const m = /(\d+\.\d+)/.exec(version)
+      return m && `${m[1]}-releases`
+    };
+
+    const stableTag = `v${latestStable}`;
+    const stableReleaseBranch = branchNameFrom(latestStable)
+    const betaTag = `v${latestBeta}`;
+    const betaReleaseBranch = branchNameFrom(latestBeta)
+
+    const taskForVersion = async (atomVersion: string, description: string) => {
+      const packageVersion = await atom.getPackageVersion(this.repo, atomVersion)
+      return {atomVersion, description, packageVersion}
+    }
+
+    const tasks: Promise<{description: string, packageVersion: string | null}>[] = []
+
+    tasks.push(taskForVersion('master', 'master'))
+    tasks.push(taskForVersion(stableTag, 'current stable'))
+    if (stableReleaseBranch) {
+      tasks.push(taskForVersion(stableReleaseBranch, 'next stable hotfix'))
+    }
+    tasks.push(taskForVersion(betaTag, 'current beta'))
+    if (betaReleaseBranch) {
+      tasks.push(taskForVersion(betaReleaseBranch, 'next beta hotfix'))
+    }
+
+    const results = (await Promise.all(tasks)).filter(({packageVersion}) => Boolean(packageVersion))
+    console.log(results)
   }
 }
