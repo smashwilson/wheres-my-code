@@ -74,8 +74,8 @@ export class AtomRepository extends Repository {
   }
 
   async getPackageVersion(packageName: string, ref: string) : Promise<string | null> {
-    const payload = await this.getFile('package.json', ref);
     try {
+      const payload = await this.getFile('package.json', ref);
       const packageData = JSON.parse(payload);
       return packageData.packageDependencies[packageName];
     } catch (e) {
