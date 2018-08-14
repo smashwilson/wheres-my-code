@@ -47,7 +47,7 @@ export default class Repository {
     for (const {isPrerelease, name} of results.data.repository.releases.nodes) {
       if (isPrerelease && latestBeta === '') {
         latestBeta = name
-      } else if (latestStable === '') {
+      } else if (!isPrerelease && latestStable === '') {
         latestStable = name
       }
 
