@@ -1,6 +1,6 @@
 {
   "name": "@smashwilson/wheres-my-code",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Find bundled module versions in Atom releases",
   "main": "build/index.js",
   "bin": "build/index.js",
